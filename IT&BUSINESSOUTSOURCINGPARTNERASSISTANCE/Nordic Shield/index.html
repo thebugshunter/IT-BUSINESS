@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="sv" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Svensk Teknik: En Global Kraft för Säkerhet och Förtroende</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Nordic Shield -->
+    <!-- Application Structure Plan: The SPA is a single-page narrative designed to build a case for the proposed tech interest group. It starts with a strong hero section stating the vision. It moves to an interactive "Pillars" section to explain the core principles. An "AI & Automation" section visualizes the future potential. The centerpiece is a conceptual, interactive dashboard for the proposed interest group, making the abstract idea tangible with mock data charts and policy examples. This structure guides the user from the "why" to the "what" and finally the "how," culminating in a clear call to action to join the initiative. This is more persuasive than a static document. -->
+    <!-- Visualization & Content Choices: 1. Pillars section: Interactive cards for Integrity, Respect, and Security. Clicking reveals details, allowing user-driven exploration. (Goal: Organize, Method: JS DOM manipulation). 2. AI & Automation section: A structured HTML/CSS flow diagram to visually represent the concept of empowerment through technology. (Goal: Organize, Method: HTML/CSS). 3. Interest Group Dashboard: A tabbed interface with a mock line chart showing "Phishing Incidents Over Time" to illustrate data analysis, and an interactive policy list to demonstrate the governance role. (Goal: Inform/Compare, Method: Chart.js, JS DOM manipulation). These choices make the abstract concepts of the source text interactive and concrete. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .hero-gradient { background: linear-gradient(135deg, #003366 0%, #004b8d 100%); }
+        .text-deep-blue { color: #003366; }
+        .bg-deep-blue { background-color: #003366; }
+        .bg-accent-blue { background-color: #007bff; }
+        .text-accent-blue { color: #007bff; }
+        .border-accent-blue { border-color: #007bff; }
+        .tab-active { color: #003366; border-bottom-color: #003366; font-weight: 600; }
+        .tab-inactive { color: #6c757d; border-bottom-color: transparent; }
+        .pillar-card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .pillar-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .animated-bg {
+            background: linear-gradient(-45deg, #e7f0f7, #f8f9fa, #e3f2fd, #f8f9fa);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-deep-blue">
+                Sveriges Digitala Vision
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#pillars" class="text-gray-600 hover:text-deep-blue transition">Våra Pelare</a>
+                <a href="#dashboard" class="text-gray-600 hover:text-deep-blue transition">Intressegruppen</a>
+                <a href="#join" class="bg-accent-blue text-white px-5 py-2 rounded-full hover:bg-opacity-90 transition shadow-md">Gå Med i Initiativet</a>
+            </div>
+             <button id="menu-btn" class="md:hidden text-deep-blue">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="#pillars" class="block py-2 text-gray-600 hover:text-deep-blue">Våra Pelare</a>
+             <a href="#dashboard" class="block py-2 text-gray-600 hover:text-deep-blue">Intressegruppen</a>
+             <a href="#join" class="block mt-2 w-full text-center bg-accent-blue text-white px-5 py-2 rounded-full hover:bg-opacity-90">Gå Med</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">En Global Kraft för Säkerhet och Förtroende.</h1>
+                <p class="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto mb-8">Svensk teknologi ska inte bara följa utvecklingen – den ska leda den. Vi bygger en framtid där innovation, säkerhet och respekt skapar trygghet och befrielse, för Sverige och för världen.</p>
+                <a href="#dashboard" class="bg-white text-deep-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-transform transform hover:scale-105 shadow-xl">Utforska Vår Vision</a>
+            </div>
+        </section>
+
+        <!-- The Swedish Pillars -->
+        <section id="pillars" class="py-16 md:py-24 animated-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-deep-blue mb-4">Grunden för Svensk Teknologisk Excellens</h2>
+                    <p class="text-lg text-gray-600 mb-12">Vår vision vilar på tre orubbliga pelare. Dessa principer är kärnan i varje lösning vi skapar och varje rekommendation vi ger. De säkerställer att teknologin tjänar människan, inte tvärtom. Klicka på en pelare för att lära dig mer.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md text-center cursor-pointer" data-content="integrity">
+                        <div class="text-5xl mb-4">🛡️</div>
+                        <h3 class="text-2xl font-bold mb-2 text-deep-blue">Integritet & Säkerhet</h3>
+                        <p class="text-gray-500">Rigorös testning och kompromisslös säkerhet. Våra lösningar är transparenta, granskbara och byggda för att stå emot morgondagens hot.</p>
+                    </div>
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md text-center cursor-pointer" data-content="respect">
+                        <div class="text-5xl mb-4">🤝</div>
+                        <h3 class="text-2xl font-bold mb-2 text-deep-blue">Respekt & Etik</h3>
+                        <p class="text-gray-500">All utveckling sker med respekt för individens integritet och samhällets värderingar, i linje med mänskliga rättigheter.</p>
+                    </div>
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md text-center cursor-pointer" data-content="empowerment">
+                        <div class="text-5xl mb-4">🚀</div>
+                        <h3 class="text-2xl font-bold mb-2 text-deep-blue">Empowerment & Befrielse</h3>
+                        <p class="text-gray-500">Teknik som frigör potential. Genom AI och automatisering skapar vi verktyg som ger kontroll, trygghet och friheten att innovera.</p>
+                    </div>
+                </div>
+                 <div id="pillar-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300">
+                    <div id="pillar-modal-content" class="bg-white rounded-lg p-8 max-w-2xl w-full transform scale-95 transition-transform duration-300">
+                        <!-- Content will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI & Automation Section -->
+        <section class="bg-white py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Framtidens Motor: AI & Automatisering</h2>
+                    <p class="text-lg text-gray-600 mb-12">Automatisering och AI är inte bara verktyg för effektivitet; de är nyckeln till en ny nivå av säkerhet och mänsklig potential. Genom att hantera repetitiva uppgifter och analysera hot i realtid frigör de oss att fokusera på strategi, kreativitet och verklig problemlösning.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-gray-50 p-8 rounded-xl">
+                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 text-center">
+                        <div class="p-4 rounded-lg flex-1">
+                            <h4 class="font-bold text-lg text-deep-blue">Data & Hot</h4>
+                            <p>Stora datamängder och komplexa hotbilder samlas in.</p>
+                        </div>
+                        <div class="text-2xl text-accent-blue font-mono">&rarr;</div>
+                        <div class="p-4 rounded-lg flex-1 bg-blue-100">
+                            <h4 class="font-bold text-lg text-deep-blue">AI-Analys & Automatiserat Försvar</h4>
+                            <p>AI upptäcker avvikelser och automatiserar försvaret i realtid.</p>
+                        </div>
+                        <div class="text-2xl text-accent-blue font-mono">&rarr;</div>
+                        <div class="p-4 rounded-lg flex-1">
+                            <h4 class="font-bold text-lg text-deep-blue">Empowerment & Befrielse</h4>
+                            <p>Organisationer och individer kan agera med trygghet och fokusera på sina mål.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Interest Group Dashboard Section -->
+        <section id="dashboard" class="py-16 md:py-24 animated-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-deep-blue mb-4">Vårt Förslag: En Oberoende Intressegrupp</h2>
+                    <p class="text-lg text-gray-600 mb-12">För att omsätta vision till verklighet föreslår vi en privat, oberoende intressegrupp. Dess syfte är att samla data, ge faktabaserade rekommendationer och hjälpa svenska organisationer att navigera i det digitala landskapet med självförtroende. Utforska dashboarden nedan för att se hur gruppen skulle kunna fungera i praktiken.</p>
+                </div>
+                <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+                    <div class="border-b border-gray-200">
+                        <div class="flex -mb-px px-4" aria-label="Tabs">
+                            <button class="dashboard-tab tab-active py-4 px-1 border-b-2 text-sm font-medium" data-tab="data">Datainsamling & Analys</button>
+                            <button class="dashboard-tab tab-inactive py-4 px-1 border-b-2 text-sm font-medium ml-8" data-tab="policy">Styrning & Policy</button>
+                            <button class="dashboard-tab tab-inactive py-4 px-1 border-b-2 text-sm font-medium ml-8" data-tab="methods">Främja Goda Metoder</button>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div id="tab-content-data" class="tab-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Trendanalys: Phishing-incidenter</h3>
+                            <p class="text-gray-600 mb-6">Genom att samla in anonymiserad data kan vi identifiera trender och mäta effekten av olika säkerhetsåtgärder. Denna graf simulerar hur införandet av stark autentisering (som YubiKey) drastiskt kan minska antalet lyckade nätfiskeattacker över tid.</p>
+                            <div class="chart-container relative w-full max-w-3xl mx-auto h-80 md:h-96">
+                                <canvas id="trendsChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="tab-content-policy" class="tab-content hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Policyrekommendationer</h3>
+                            <p class="text-gray-600 mb-6">Baserat på data och analys tar gruppen fram konkreta, faktabaserade rekommendationer för att hjälpa lagstiftare och organisationer. Klicka för att expandera.</p>
+                             <div class="space-y-4">
+                                <div class="policy-item border rounded-lg">
+                                    <button class="w-full text-left p-4 flex justify-between items-center">
+                                        <span class="font-semibold text-deep-blue">Rekommendation #1: Standard för Stark MFA i Offentlig Sektor</span>
+                                        <span class="text-accent-blue text-xl transform transition-transform">+</span>
+                                    </button>
+                                    <div class="policy-content hidden p-4 border-t text-gray-600">
+                                        <p>Föreslå införandet av FIDO2-baserad, phishing-resistent MFA som en minimistandard för alla inloggningar till känsliga system inom offentlig sektor för att skydda medborgardata och kritisk infrastruktur.</p>
+                                    </div>
+                                </div>
+                                <div class="policy-item border rounded-lg">
+                                    <button class="w-full text-left p-4 flex justify-between items-center">
+                                        <span class="font-semibold text-deep-blue">Rekommendation #2: Riktlinjer för Etisk AI-användning</span>
+                                         <span class="text-accent-blue text-xl transform transition-transform">+</span>
+                                    </button>
+                                     <div class="policy-content hidden p-4 border-t text-gray-600">
+                                        <p>Utveckla ett ramverk med klara riktlinjer för ansvarsfull och etisk användning av AI inom säkerhet, med fokus på transparens, dataminimering och skydd mot bias.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-content-methods" class="tab-content hidden">
+                           <h3 class="text-2xl font-bold text-gray-800 mb-4">Exempel på Goda Metoder</h3>
+                           <p class="text-gray-600 mb-6">Gruppen sprider kunskap genom att lyfta fram framgångsrika implementationer och fallstudier från svenska företag och organisationer.</p>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                               <div class="bg-gray-100 p-6 rounded-lg">
+                                   <h4 class="font-bold text-lg text-deep-blue">Case Study: Finansbolag X</h4>
+                                   <p class="text-gray-700 mt-2">Genom att implementera lösenordsfri inloggning med säkerhetsnycklar minskade företaget sina IT-supportkostnader med 75% och eliminerade helt risken för kontoövertaganden via nätfiske.</p>
+                               </div>
+                               <div class="bg-gray-100 p-6 rounded-lg">
+                                   <h4 class="font-bold text-lg text-deep-blue">Case Study: Kommun Y</h4>
+                                   <p class="text-gray-700 mt-2">En kommun säkrade sin molnmiljö och förenklade inloggningen för tusentals anställda, vilket ledde till ökad produktivitet och efterlevnad av GDPR.</p>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section id="join" class="hero-gradient text-white">
+            <div class="container mx-auto px-6 py-16 md:py-24 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Bli en Del av Lösningen</h2>
+                <p class="text-lg text-blue-100 max-w-2xl mx-auto mb-8">Denna vision kan bara bli verklighet genom samarbete. Vi söker individer, organisationer och företag som delar vår passion för en säker och innovativ digital framtid. Stöd initiativet, bidra med er expertis, eller hjälp till att finansiera den forskning som krävs.</p>
+                <button class="bg-white text-deep-blue px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-transform transform hover:scale-105 shadow-xl">Anmäl Intresse</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400">
+        <div class="container mx-auto px-6 py-8 text-center text-sm">
+            <p>&copy; 2025 Initiativet för Säker Svensk Teknologi</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Pillar Modal
+        const pillarCards = document.querySelectorAll('.pillar-card');
+        const pillarModal = document.getElementById('pillar-modal');
+        const pillarModalContent = document.getElementById('pillar-modal-content');
+        const pillarContentData = {
+            integrity: {
+                title: '🛡️ Integritet & Säkerhet i Detalj',
+                text: 'Kärnan i vår filosofi är att förtroende måste förtjänas. Detta uppnås genom att bygga lösningar som är transparenta och verifierbara. Vi förespråkar rigorös, oberoende granskning av säkerhetsprodukter och öppenhet kring hur data hanteras. En lösning som inte kan granskas, kan inte fullt ut litas på. Säkerhet är inte en produkt, utan en process av ständig förbättring och vaksamhet.'
+            },
+            respect: {
+                title: '🤝 Respekt & Etik i Praktiken',
+                text: 'Teknik är ett kraftfullt verktyg som måste användas ansvarsfullt. Vårt fokus ligger på att säkerställa att innovationen alltid respekterar grundläggande mänskliga rättigheter och demokratiska värderingar. Detta innebär att aktivt arbeta mot partiskhet (bias) i algoritmer, förespråka stark dataskyddslagstiftning och designa system som stärker individens autonomi snarare än att kontrollera den.'
+            },
+            empowerment: {
+                title: '🚀 Vägen till Empowerment & Befrielse',
+                text: 'Sann empowerment kommer när tekniken blir osynlig och bara fungerar – säkert och pålitligt. Genom att automatisera komplexa säkerhetsåtgärder och använda AI för att proaktivt hantera hot, frigör vi människor från den mentala bördan av digital osäkerhet. Detta låter oss fokusera på det vi gör bäst: att vara kreativa, samarbeta och lösa verkliga problem. Det är den ultimata befrielsen tekniken kan erbjuda.'
+            }
+        };
+
+        pillarCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const contentKey = card.dataset.content;
+                const data = pillarContentData[contentKey];
+                pillarModalContent.innerHTML = `
+                    <h3 class="text-2xl font-bold text-deep-blue mb-4">${data.title}</h3>
+                    <p class="text-gray-700 mb-6">${data.text}</p>
+                    <button id="close-modal-btn" class="bg-accent-blue text-white px-5 py-2 rounded-full hover:bg-opacity-90">Stäng</button>
+                `;
+                pillarModal.classList.remove('hidden');
+                setTimeout(() => pillarModal.style.opacity = '1', 10);
+                setTimeout(() => pillarModalContent.style.transform = 'scale(1)', 10);
+            });
+        });
+
+        pillarModal.addEventListener('click', (e) => {
+            if (e.target === pillarModal || e.target.id === 'close-modal-btn' || e.target.closest('#close-modal-btn')) {
+                 pillarModalContent.style.transform = 'scale(0.95)';
+                 pillarModal.style.opacity = '0';
+                 setTimeout(() => pillarModal.classList.add('hidden'), 300);
+            }
+        });
+
+
+        // Dashboard Tabs
+        const tabs = document.querySelectorAll('.dashboard-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(item => item.classList.replace('tab-active', 'tab-inactive'));
+                tab.classList.replace('tab-inactive', 'tab-active');
+
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                const target = document.getElementById(`tab-content-${tab.dataset.tab}`);
+                target.classList.remove('hidden');
+            });
+        });
+
+        // Policy Accordion
+        const policyItems = document.querySelectorAll('.policy-item');
+        policyItems.forEach(item => {
+            const button = item.querySelector('button');
+            const content = item.querySelector('.policy-content');
+            const icon = button.querySelector('span:last-child');
+            button.addEventListener('click', () => {
+                const isVisible = !content.classList.contains('hidden');
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-45');
+            });
+        });
+
+        // Trends Chart
+        const trendsChartCtx = document.getElementById('trendsChart').getContext('2d');
+        new Chart(trendsChartCtx, {
+            type: 'line',
+            data: {
+                labels: ['År 1', 'År 2', 'År 3 (Policy Införd)', 'År 4', 'År 5'],
+                datasets: [{
+                    label: 'Rapporterade Nätfiskeincidenter',
+                    data: [1200, 1350, 450, 300, 250],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Antal Incidenter' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>
