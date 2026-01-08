@@ -36,7 +36,7 @@
             position: absolute;
             top: 0;
             left: -60%;
-            width: 60%; /* much wider highlight for a visible, elegant sheen */
+            width: 60%;
             height: 100%;
             background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
             filter: blur(4px);
@@ -46,455 +46,166 @@
             transform: translateX(0);
             transition: left 2200ms cubic-bezier(.2,.9,.25,1), transform 2200ms cubic-bezier(.2,.9,.25,1), opacity 500ms linear;
         }
-        /* Left-to-right sweep: start off-left, activate to sweep across */
-        .shimmer.sweep-ltr::after {
-            left: -60%;
-        }
-        .shimmer.sweep-ltr.wave-active::after {
-            left: 180%;
-            opacity: 1;
-        }
-        /* Right-to-left sweep: position pseudo off-right, then animate to left */
-        .shimmer.sweep-rtl::after {
-            left: 180%;
-        }
-        .shimmer.sweep-rtl.wave-active::after {
-            left: -60%;
-            opacity: 1;
-        }
-        /* Shiny glow effect for cards */
-        .card-bg.shimmer {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.8), rgba(110, 231, 183, 0.05));
-            box-shadow: 0 0 20px rgba(110, 231, 183, 0.1), inset 0 0 20px rgba(110, 231, 183, 0.02);
-            border: 1px solid rgba(110, 231, 183, 0.2);
-            transition: all 0.3s ease;
-        }
-        .card-bg.shimmer:hover {
-            box-shadow: 0 0 30px rgba(110, 231, 183, 0.2), inset 0 0 30px rgba(110, 231, 183, 0.05);
-            border: 1px solid rgba(110, 231, 183, 0.4);
-        }
+        .shimmer.sweep-ltr::after { left: -60%; }
+        .shimmer.sweep-ltr.wave-active::after { left: 180%; opacity: 1; }
+        .shimmer.sweep-rtl::after { left: 180%; }
+        .shimmer.sweep-rtl.wave-active::after { left: -60%; opacity: 1; }
+
         .card-bg {
             background-color: rgba(22, 27, 34, 0.6);
             backdrop-filter: blur(10px);
             border: 1px solid #30363d;
         }
-        .btn-primary {
-            transition: transform 0.2s, background-color 0.2s;
+        .card-bg:hover {
+            border-color: #58a6ff;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            background-color: #3b82f6;
-        }
-        .btn-blinking {
-            animation: blinker 2s linear infinite;
-        }
-        @keyframes blinker {
-            50% { opacity: 0.5; }
-        }
-        /* Fade-in animation for reveal effects */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .reveal {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        .hidden {
-            display: none;
-        }
+        
+        .btn-primary { transition: transform 0.2s, background-color 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); background-color: #3b82f6; }
+        
+        .btn-blinking { animation: blinker 2s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0.5; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .reveal { animation: fadeInUp 0.6s ease-out; }
+        .hidden { display: none; }
+
+        /* Modal Styles */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
+            justify-content: center; align-items: center;
         }
+
+        /* Chat Window */
         #floating-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 50;
-            padding: 10px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease-in-out;
+            position: fixed; top: 20px; left: 20px; z-index: 50; padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1); border-radius: 9999px; display: none;
+            justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease-in-out;
         }
-        #floating-button:hover {
-            transform: scale(1.1);
-        }
+        #floating-button:hover { transform: scale(1.1); }
+
         #chat-window {
-            position: fixed;
-            bottom: 20px; /* Adjusted to give more space */
-            right: 20px;
-            width: 350px;
-            max-width: 90%; /* To prevent overflow on very small screens */
-            height: 500px;
-            max-height: 80vh; /* Use viewport height for better scaling */
-            background-color: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            border: 1px solid #30363d;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform: translateY(100%);
-            opacity: 0;
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            position: fixed; bottom: 20px; right: 20px; width: 350px; max-width: 90%; height: 500px; max-height: 80vh;
+            background-color: rgba(22, 27, 34, 0.95); backdrop-filter: blur(10px); border-radius: 12px;
+            border: 1px solid #30363d; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            display: flex; flex-direction: column; overflow: hidden;
+            transform: translateY(110%); opacity: 0; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
             z-index: 49;
         }
-        #chat-window.open {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        #chat-window.open { transform: translateY(0); opacity: 1; }
+        
         #chat-header {
-            background-color: #161b22;
-            padding: 1rem;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            background-color: #161b22; padding: 1rem; border-bottom: 1px solid #30363d;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        #chat-messages {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .message-bubble {
-            padding: 0.75rem 1rem;
-            border-radius: 18px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-        .user-message {
-            background-color: #2a3a50;
-            color: #e6f0ff;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .bot-message {
-            background-color: #1f2a3a;
-            color: #d1e5ff;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        #chat-input-container {
-            padding: 1rem;
-            border-top: 1px solid #30363d;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-end; /* Align to the bottom of the container */
-        }
-        #chat-input {
-            flex-grow: 1;
-            padding: 0.75rem;
-            background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            color: #c9d1d9;
-            resize: none;
-            min-height: 40px; /* Ensure a minimum height */
-        }
-        #send-button {
-            padding: 0.75rem 1rem;
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 8px;
-            margin-left: 10px;
-            display: flex; /* Ensure button content is centered */
-            align-items: center;
-            justify-content: center;
-            height: 40px; /* Match height of input */
-        }
-        /* Navigation Bar Styles */
+        #chat-messages { flex-grow: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .message-bubble { padding: 0.75rem 1rem; border-radius: 18px; max-width: 80%; word-wrap: break-word; font-size: 0.9rem; }
+        .user-message { background-color: #3b82f6; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .bot-message { background-color: #1f2a3a; color: #d1e5ff; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #30363d; }
+        
+        #chat-input-container { padding: 1rem; border-top: 1px solid #30363d; display: flex; gap: 8px; background: #0d1117; }
+        #chat-input { flex-grow: 1; padding: 0.75rem; background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #c9d1d9; resize: none; min-height: 40px; outline: none; }
+        #chat-input:focus { border-color: #3b82f6; }
+        #send-button { padding: 0 1rem; background-color: #238636; color: white; border-radius: 8px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; }
+        #send-button:hover { background-color: #2ea043; }
+
+        /* Navigation Bar - SMART SCROLL Logic */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 40;
+            background: transparent; /* Start transparent, no line */
+            border-bottom: 1px solid transparent; /* No line initially */
+            padding: 1rem 2rem;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* State when scrolling DOWN (Hide) */
+        nav.nav-hidden {
+            transform: translateY(-100%);
+        }
+        
+        /* State when scrolled but visible (UP) */
+        nav.nav-scrolled {
             background: rgba(13, 17, 23, 0.9);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid #30363d;
-            padding: 1rem 2rem;
-            transition: all 0.3s ease;
+            border-bottom: 1px solid #30363d; /* Line appears only when scrolled */
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        nav.scrolled {
-            background: rgba(13, 17, 23, 0.5);
-            border-bottom: 1px solid rgba(48, 54, 61, 0.3);
+
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .nav-logo { font-size: 1.25rem; font-weight: bold; color: #6EE7B7; text-decoration: none; text-shadow: 0 0 10px rgba(110, 231, 183, 0.3); }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-link { color: #c9d1d9; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; cursor: pointer; }
+        .nav-link:hover { color: #6EE7B7; }
+        
+        /* Buttons in nav */
+        .lang-toggle, .panic-btn-nav, .help-btn-nav {
+            padding: 0.5rem 1rem; border: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .nav-logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #6EE7B7;
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-        .nav-link {
-            color: #c9d1d9;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-        .nav-link:hover {
-            color: #6EE7B7;
-        }
-        .lang-toggle {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, #6EE7B7, #3B82F6);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .lang-toggle:hover {
-            transform: translateY(-2px);
-        }
-        .panic-btn-nav {
-            padding: 0.5rem 1rem;
-            background: #dc2626;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            animation: blinker 2s linear infinite;
-            transition: background-color 0.2s;
-        }
-        .panic-btn-nav:hover {
-            background-color: #b91c1c;
-        }
-        .help-btn-nav {
-            padding: 0.5rem 1rem;
-            background: rgba(59, 130, 246, 0.8);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .help-btn-nav:hover {
-            background-color: #3b82f6;
-        }
-        /* Adjust main content for fixed nav */
-        main {
-            margin-top: 80px;
-        }
-        /* Mobile-specific styles for chat window */
+        .lang-toggle { background: #1f2937; color: white; border: 1px solid #374151; }
+        .lang-toggle:hover { border-color: #6EE7B7; color: #6EE7B7; }
+        .panic-btn-nav { background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid #dc2626; }
+        .panic-btn-nav:hover { background: #dc2626; color: white; box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); }
+        .help-btn-nav { background: #2563eb; color: white; }
+        .help-btn-nav:hover { background: #1d4ed8; }
+
+        main { margin-top: 100px; }
+
+        /* Mobile specific adjustments */
         @media (max-width: 640px) {
-            #chat-window {
-                width: 90%;
-                left: 50%;
-                transform: translateX(-50%) translateY(100%);
-                bottom: 20px;
-                height: 80%;
-            }
-            #chat-window.open {
-                transform: translateX(-50%) translateY(0);
-            }
-            nav {
-                padding: 0.75rem 1rem;
-            }
-            /* Stack header nav vertically and center items for small screens */
-            .nav-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            .nav-links {
-                gap: 0.75rem;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-            }
-            .nav-link {
-                font-size: 0.9rem;
-            }
-            .nav-logo {
-                text-align: center;
-                margin-bottom: 0.25rem;
-            }
-            .nav-links button, .nav-links .nav-link {
-                padding: 0.45rem 0.75rem;
-                font-size: 0.85rem;
-            }
-
-            /* On mobile, show buttons first then put Services/Projects on their own line below */
-            .nav-links .help-btn-nav,
-            .nav-links .panic-btn-nav,
-            .nav-links .lang-toggle {
-                order: 1;
-                flex: 0 1 auto;
-            }
-            .nav-links .nav-link {
-                order: 2;
-                flex: 0 0 auto; /* allow links to sit side-by-side */
-                display: inline-block;
-                text-align: center;
-                margin: 0 0.5rem;
-            }
-
-            /* Make header content appear after nav and centered */
-            header {
-                text-align: center;
-                padding: 1rem 0.5rem;
-            }
-            header h1 {
-                font-size: 2rem;
-                line-height: 1.05;
-            }
-
-            /* Center membership card and make it compact */
-            #membership-section {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1rem 0.5rem;
-            }
-            /* Make membership card wider on mobile (use more of the viewport) */
-            #membership-section .card-bg {
-                width: calc(100% - 32px);
-                max-width: 98%;
-                padding: 1.25rem 1rem;
-                box-sizing: border-box;
-            }
-            /* When nav is compact, hide Services/Projects and show only buttons */
-            nav.compact .nav-link { display: none !important; }
-            nav.compact .help-btn-nav, nav.compact .panic-btn-nav, nav.compact .lang-toggle { display: inline-block; }
+            #chat-window { width: 95%; left: 50%; transform: translateX(-50%) translateY(110%); bottom: 10px; height: 70vh; }
+            #chat-window.open { transform: translateX(-50%) translateY(0); }
+            nav { padding: 0.75rem 1rem; }
+            .nav-container { flex-direction: column; gap: 0.5rem; }
+            .nav-links { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+            .nav-logo { margin-bottom: 5px; }
         }
-        /* Detail modal styles */
-        .detail-close {
-            position: absolute;
-            right: 12px;
-            top: 10px;
-            background: transparent;
-            color: #c9d1d9;
-            border: none;
-            font-size: 1.4rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-        #detail-modal .card-bg {
-            max-width: 900px;
-            width: calc(100% - 48px);
-            max-height: 80vh;
-            overflow: auto;
-            padding: 1.25rem 1.5rem;
-            border-radius: 12px;
-        }
-        #detail-title { color: #e6fff6; }
-        #detail-body { color: #cbd6da; }
-        #detail-footer {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #30363d;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        @media (max-width: 640px) {
-            #detail-footer {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-            #detail-footer p { display: none; }
-            #detail-link { width: 100%; text-align: center; }
-        }
+        
+        /* Detail Modal */
+        .detail-close { position: absolute; right: 12px; top: 10px; background: transparent; color: #c9d1d9; border: none; font-size: 1.5rem; cursor: pointer; }
+        #detail-modal .card-bg { max-width: 900px; width: 95%; max-height: 85vh; padding: 2rem; border-radius: 12px; }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Navigation Bar -->
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
             <div class="nav-logo">IT & Business Outsourcing Partner</div>
             <div class="nav-links">
                 <a class="nav-link" onclick="scrollToServices()" data-key="servicesNav">Services</a>
                 <a class="nav-link" onclick="scrollToProjects()" data-key="projectsNav">Projects</a>
-                <button class="help-btn-nav" onclick="toggleChat()" id="help-button-nav" data-key="helpButtonNav">💬 Help</button>
+                <button class="help-btn-nav" onclick="toggleChat()" data-key="helpButtonNav">💬 Help</button>
                 <button class="panic-btn-nav" onclick="scrollToEmergency()" data-key="panicButtonNav">🚨 Panic</button>
-                <button class="lang-toggle" onclick="toggleLanguage()" id="lang-toggle-btn">
-                    <span id="lang-display">EN/SV</span>
-                </button>
+                <button class="lang-toggle" onclick="toggleLanguage()" id="lang-toggle-btn">EN/SV</button>
             </div>
         </div>
     </nav>
 
-    <!-- Three.js Canvas -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Main Content Wrapper -->
     <main class="relative z-10 min-h-screen flex flex-col justify-center items-center p-4 md:p-8">
 
-        <!-- Header/Hero Section -->
-        <header class="w-full max-w-5xl text-center my-16">
+        <header class="w-full max-w-5xl text-center my-16 relative">
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-white shimmer">
                 <span class="text-gradient" data-key="title">IT & Affärsassistans</span>
             </h1>
             <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-2" data-key="heroText">
-                Din partner för digital spetskompetens. Med rötter i Sverige hjälper vi företag och organisationer att blomstra i den digitala världen genom omfattande outsourcinglösningar.
+                Din partner för digital spetskompetens.
             </p>
-            <!-- New Marketing Titles & Text -->
             <p class="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-4" data-key="heroSubTitle1">
                 Navigera i den digitala transformationen med oss.
             </p>
-            <p class="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-4" data-key="heroSubText1">
-                Vi erbjuder skräddarsydda strategier som effektiviserar er verksamhet och driver innovation framåt. Vår expertis täcker allt från molnlösningar till cybersäkerhet, så att ni kan fokusera på det som är viktigt.
+            <p class="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8" data-key="heroSubText1">
+                Vi erbjuder skräddarsydda strategier som effektiviserar er verksamhet.
             </p>
-            <p class="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-4" data-key="heroSubTitle2">
-                Maximera er potential med smarta lösningar.
-            </p>
-            <p class="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8" data-key="heroSubText2">
-                Genom att implementera de senaste teknologierna säkerställer vi att ni alltid är ett steg före. Oavsett om det gäller avancerad dataanalys eller systemintegration, är vi här för att hjälpa er nå era mål.
-            </p>
-            <p class="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8" data-key="privateHelpText">
-                Bråkar skrivaren hemma och ingen kan hjälpa till?
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
                 <button id="panic-button" class="btn-primary btn-blinking bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-red-700 shimmer" onclick="scrollToEmergency()" data-key="panicButton">
                     Panikknapp
                 </button>
@@ -504,735 +215,426 @@
             </div>
         </header>
 
-        <!-- Services Section -->
         <section id="services" class="w-full max-w-6xl my-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-key="servicesTitle">Tjänster</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service Card 1 -->
-                <a href="#" target="_blank" data-detail="service1" role="button" class="card-bg shimmer rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 block reveal" style="animation-delay: -0s">
-                    <h3 class="text-xl font-bold mb-3 text-white flex items-center" data-key="service1Title">
-                        Digital Transformation ✨
-                    </h3>
-                    <p class="text-sm text-gray-400 leading-relaxed" data-key="service1Text">
-                        Navigera i den digitala utvecklingens komplexitet. Vi är specialiserade på digital presentation, implementering och expansion, för att säkerställa att ditt företag är redo för framtiden.
-                    </p>
-                </a>
-                <!-- Service Card 2 -->
-                <a href="#" target="_blank" data-detail="service2" role="button" class="card-bg shimmer rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 block reveal" style="animation-delay: -1s">
-                    <h3 class="text-xl font-bold mb-3 text-white flex items-center" data-key="service2Title">
-                        Drift & Kontroll ⚙️
-                    </h3>
-                    <p class="text-sm text-gray-400 leading-relaxed" data-key="service2Text">
-                        Få full överblick och kontroll. Vår expertis täcker analys, kunskapshantering och utredning, vilket ger dig den datadrivna insikt du behöver för att lyckas.
-                    </p>
-                </a>
-                <!-- Service Card 3 -->
-                <a href="#" target="_blank" data-detail="service3" role="button" class="card-bg shimmer rounded-2xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 block reveal" style="animation-delay: -2s">
-                    <h3 class="text-xl font-bold mb-3 text-white flex items-center" data-key="service3Title">
-                        Validering & Support ✅
-                    </h3>
-                    <p class="text-sm text-gray-400 leading-relaxed" data-key="service3Text">
-                        Säkerställ kvalitet och pålitlighet. Vi erbjuder insikter från tredje part, verifiering, rigorösa tester och kontinuerligt stöd för att hålla din verksamhet igång smidigt.
-                    </p>
-                </a>
+                <div data-detail="service1" class="card-bg shimmer rounded-2xl p-6 md:p-8 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300 reveal">
+                    <h3 class="text-xl font-bold mb-3 text-white" data-key="service1Title">Digital Transformation ✨</h3>
+                    <p class="text-sm text-gray-400" data-key="service1Text">Navigera i den digitala utvecklingens komplexitet.</p>
+                </div>
+                <div data-detail="service2" class="card-bg shimmer rounded-2xl p-6 md:p-8 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300 reveal">
+                    <h3 class="text-xl font-bold mb-3 text-white" data-key="service2Title">Drift & Kontroll ⚙️</h3>
+                    <p class="text-sm text-gray-400" data-key="service2Text">Få full överblick och kontroll med datadriven insikt.</p>
+                </div>
+                <div data-detail="service3" class="card-bg shimmer rounded-2xl p-6 md:p-8 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300 reveal">
+                    <h3 class="text-xl font-bold mb-3 text-white" data-key="service3Title">Validering & Support ✅</h3>
+                    <p class="text-sm text-gray-400" data-key="service3Text">Säkerställ kvalitet med rigorösa tester och stöd.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Projects Section: quick links to other index pages -->
         <section id="projects" class="w-full max-w-6xl my-16">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-8" data-key="projectsTitle">Projects & Pages</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <a href="Nordic Shield/index.html" data-detail="nordicShield" class="block card-bg shimmer rounded-2xl p-6 hover:shadow-2xl transition-shadow duration-300 reveal" style="animation-delay: -0s">
+                <a href="Nordic Shield/index.html" class="block card-bg shimmer rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 reveal">
                     <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-700 to-blue-400 flex items-center justify-center text-white font-bold text-lg">NS</div>
+                        <div class="w-16 h-16 rounded-xl bg-blue-900 flex items-center justify-center text-white font-bold text-lg border border-blue-500">NS</div>
                         <div>
                             <h3 class="text-xl font-bold text-white" data-key="nordicShieldTitle">Nordic Shield</h3>
-                            <p class="text-sm text-gray-400" data-key="nordicShieldDesc">Swedish tech vision and dashboard – open to explore.</p>
+                            <p class="text-sm text-gray-400" data-key="nordicShieldDesc">Tech vision dashboard.</p>
                         </div>
                     </div>
                 </a>
-
-                <a href="Parental Guidance System /index.html" data-detail="parentalGuidance" class="block card-bg shimmer rounded-2xl p-6 hover:shadow-2xl transition-shadow duration-300 reveal" style="animation-delay: -1.5s">
+                <a href="Parental Guidance System /index.html" class="block card-bg shimmer rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 reveal">
                     <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-green-600 to-yellow-400 flex items-center justify-center text-white font-bold text-lg">PG</div>
+                        <div class="w-16 h-16 rounded-xl bg-green-900 flex items-center justify-center text-white font-bold text-lg border border-green-500">PG</div>
                         <div>
-                            <h3 class="text-xl font-bold text-white" data-key="parentalGuidanceTitle">Parental Guidance System</h3>
-                            <p class="text-sm text-gray-400" data-key="parentalGuidanceDesc">Parental and guidance project – open for details.</p>
+                            <h3 class="text-xl font-bold text-white" data-key="parentalGuidanceTitle">Parental Guidance</h3>
+                            <p class="text-sm text-gray-400" data-key="parentalGuidanceDesc">Safety & guidance system.</p>
                         </div>
                     </div>
                 </a>
             </div>
         </section>
 
-        <!-- Emergency & Payment Section -->
         <section id="emergency" class="w-full max-w-4xl my-16 text-center">
-            <div data-detail="emergency" role="button" class="card-bg rounded-2xl p-8 md:p-12 shadow-xl border-dashed border-2 border-red-500">
-                <h2 class="text-3xl md:text-4xl font-bold text-red-400 mb-4" data-key="emergencyTitle">
-                    Akut Support
-                </h2>
+            <div class="card-bg rounded-2xl p-8 md:p-12 shadow-xl border border-red-900/50 bg-red-900/10">
+                <h2 class="text-3xl md:text-4xl font-bold text-red-400 mb-4" data-key="emergencyTitle">Akut Support</h2>
                 <p class="text-lg text-gray-300 mb-8" data-key="emergencyText">
-                    För akuta situationer inom den privata sektorn erbjuder vi omedelbar assistans. Betala för engångsstöd eller teckna ett medlemskap för löpande hjälp.
+                    För akuta situationer erbjuder vi omedelbar assistans.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <button class="btn-primary btn-blinking bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-red-700 shimmer" onclick="showModal('Mock: Processing one-time payment with Stripe...'); event.stopPropagation();" data-key="emergencyButton">
-                        Akut Support
-                    </button>
-                </div>
-                <div class="mt-6 text-sm text-gray-400">
-                    <p class="mb-2" data-key="klarnaText">
-                        För fakturabetalning är vi integrerade med Klarna. Kontakta oss direkt för att ordna.
-                    </p>
-                    <p data-key="calendlyText">
-                        Boka ett möte med vårt team via <a href="#" id="calendly-link" class="text-blue-400 underline hover:text-blue-300">Calendly</a>.
-                    </p>
-                </div>
+                <button class="btn-primary btn-blinking bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-red-700 shimmer" onclick="showModal('Processing payment request...');" data-key="emergencyButton">
+                    Akut Support
+                </button>
             </div>
         </section>
 
-        <!-- Membership Section -->
         <section id="membership-section" class="w-full max-w-4xl my-16 text-center reveal">
-            <div data-detail="membership" role="button" class="card-bg shimmer rounded-2xl p-8 md:p-12 shadow-2xl w-full mx-4 relative">
+            <div class="card-bg shimmer rounded-2xl p-8 md:p-12 shadow-2xl w-full mx-auto">
                 <h2 class="text-3xl font-bold text-center text-white mb-6" data-key="membershipModalTitle">Medlemskap</h2>
-                <p class="text-center text-gray-400 mb-8" data-key="membershipModalIntro">
-                    Våra medlemskap erbjuder dig kontinuerlig support och kunskap, till ett lägre pris. Fyll i dina uppgifter för att se din personliga prisplan.
-                </p>
-
-                <!-- Membership Form -->
-                <form id="membership-form" class="space-y-4">
+                <form id="membership-form" class="space-y-4 text-left max-w-md mx-auto">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-400" data-key="formNameLabel">Namn</label>
-                        <input type="text" id="name" name="name" class="w-full px-4 py-2 mt-1 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring focus:ring-blue-500" required>
+                        <label class="block text-sm font-medium text-gray-400" data-key="formNameLabel">Namn</label>
+                        <input type="text" class="w-full px-4 py-2 mt-1 rounded-lg bg-[#0d1117] text-white border border-gray-700 focus:outline-none focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-400" data-key="formEmailLabel">E-post</label>
-                        <input type="email" id="email" name="email" class="w-full px-4 py-2 mt-1 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring focus:ring-blue-500" required>
+                        <label class="block text-sm font-medium text-gray-400" data-key="formEmailLabel">E-post</label>
+                        <input type="email" class="w-full px-4 py-2 mt-1 rounded-lg bg-[#0d1117] text-white border border-gray-700 focus:outline-none focus:border-blue-500">
                     </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-400" data-key="formPhoneLabel">Mobilnummer</label>
-                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 mt-1 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring focus:ring-blue-500" required>
-                    </div>
-                    <button type="submit" class="w-full btn-primary bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 shimmer" data-key="formSubmitButton">
+                    <button type="submit" class="w-full btn-primary bg-blue-600 text-white font-bold py-3 mt-4 rounded-full shadow-lg hover:bg-blue-700" data-key="formSubmitButton">
                         Se Priser
                     </button>
                 </form>
-
-                <!-- Pricing Section (Hidden initially) -->
+                
                 <div id="pricing-results" class="mt-8 hidden">
-                    <h3 class="text-2xl font-bold text-center text-white mb-4" data-key="pricingHeader">Våra Medlemskap</h3>
-                    <p class="text-center text-gray-400 mb-6" data-key="pricingIntro">
-                        Jämför våra medlemskap med engångssupport för att se hur mycket du kan spara.
-                    </p>
-                    <div class="space-y-4">
-                        <!-- Pricing Card 1 -->
-                        <div data-detail="plan1" class="card-bg p-6 rounded-lg border-blue-500 border-2 shimmer reveal" style="animation-delay: 0.1s">
-                            <h4 class="text-xl font-bold mb-2 text-white" data-key="plan1Title">Bas Medlemskap</h4>
-                            <p class="text-3xl font-bold text-green-400 mb-4" data-key="plan1Price">500 SEK/månad</p>
-                            <ul class="text-sm text-gray-400 list-disc list-inside space-y-1">
-                                <li data-key="plan1Feature1">Grundläggande IT-support</li>
-                                <li data-key="plan1Feature2">Kontinuerlig information via e-post</li>
-                                <li data-key="plan1Feature3">Förtur till support</li>
-                            </ul>
+                    <h3 class="text-2xl font-bold text-white mb-4" data-key="pricingHeader">Våra Medlemskap</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="card-bg p-6 rounded-lg border-blue-500 border">
+                            <h4 class="text-xl font-bold text-white" data-key="plan1Title">Bas</h4>
+                            <p class="text-2xl text-green-400 font-bold" data-key="plan1Price">500 SEK/mån</p>
                         </div>
-                        <!-- Pricing Card 2 -->
-                        <div data-detail="plan2" class="card-bg p-6 rounded-lg shimmer reveal" style="animation-delay: 0.2s">
-                            <h4 class="text-xl font-bold mb-2 text-white" data-key="plan2Title">Premium Medlemskap</h4>
-                            <p class="text-3xl font-bold text-green-400 mb-4" data-key="plan2Price">900 SEK/månad</p>
-                            <ul class="text-sm text-gray-400 list-disc list-inside space-y-1">
-                                <li data-key="plan2Feature1">Obegränsad IT-support</li>
-                                <li data-key="plan2Feature2">Personlig rådgivning</li>
-                                <li data-key="plan2Feature3">Exklusivt utbildningsmaterial</li>
-                            </ul>
+                        <div class="card-bg p-6 rounded-lg">
+                            <h4 class="text-xl font-bold text-white" data-key="plan2Title">Premium</h4>
+                            <p class="text-2xl text-green-400 font-bold" data-key="plan2Price">900 SEK/mån</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="w-full max-w-5xl text-center py-8 border-t border-gray-700 mt-16 text-sm text-gray-500">
-            <p data-key="footerText1">
-                Stolt baserade i Europa, med rötter i Sverige.
-            </p>
-            <p class="mt-2" data-key="footerText2">
-                &copy; 2026 IT & Affärsassistans. Alla rättigheter förbehållna.
-            </p>
+        <footer class="w-full text-center py-8 border-t border-gray-800 mt-16 text-sm text-gray-500">
+            <p data-key="footerText1">Stolt baserade i Europa, med rötter i Sverige.</p>
+            <p class="mt-2" data-key="footerText2">&copy; 2026 IT & Affärsassistans.</p>
         </footer>
 
     </main>
 
-    <!-- Floating Chat Button -->
-    <div id="floating-button" class="shimmer">
-        <span class="text-white text-base font-bold" data-key="clickMeText">Help</span>
+    <div id="floating-button">
+        <span class="text-white text-base font-bold">💬</span>
     </div>
 
-    <!-- Chat Window -->
     <div id="chat-window" class="hidden">
         <div id="chat-header">
-            <h3 class="font-bold" data-key="chatTitle">Chattassistent</h3>
-            <button id="close-chat" class="text-white hover:text-gray-400">&times;</button>
-        </div>
-        <div id="chat-messages"></div>
-        <div id="chat-input-container">
-            <textarea id="chat-input" class="w-full" placeholder="Skriv ditt meddelande..." rows="1"></textarea>
-            <button id="send-button" class="btn-primary" data-key="sendButton">Skicka</button>
-        </div>
-    </div>
-
-    <!-- Message Modal -->
-    <div id="message-modal" class="modal">
-        <div class="card-bg rounded-lg p-6 w-11/12 max-w-sm">
-            <p id="modal-text" class="text-center mb-4 text-white"></p>
-            <button id="modal-close-button" class="btn-primary bg-blue-600 text-white w-full py-2 rounded-full">OK</button>
-        </div>
-    </div>
-
-    <!-- Detail Modal for cards -->
-    <div id="detail-modal" class="modal" aria-hidden="true">
-        <div class="card-bg rounded-lg" style="max-width:900px; width:calc(100% - 48px); max-height:80vh; overflow:auto; padding:1.25rem 1.5rem; position:relative; display:flex; flex-direction:column;">
-            <button id="detail-close-button" class="detail-close" aria-label="Close details">&times;</button>
-            <h3 id="detail-title" class="text-2xl font-bold text-white mb-4"></h3>
-            <div id="detail-body" class="text-gray-300 flex-1"></div>
-            <div id="detail-footer" style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid #30363d; display:flex; align-items:center; justify-content:space-between;">
-                <p class="text-sm text-gray-500"></p>
-                <a id="detail-link" href="#" class="btn-primary bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700" data-key="readMoreText"></a>
+            <div class="flex items-center gap-2">
+                <span class="text-xl">🤖</span>
+                <div>
+                    <h3 class="font-bold text-white text-sm" data-key="chatTitle">Support Assistant</h3>
+                    <span class="text-xs text-green-400">● Online (QA Master)</span>
+                </div>
             </div>
+            <button id="close-chat" class="text-gray-400 hover:text-white text-xl">&times;</button>
+        </div>
+        <div id="chat-messages">
+            <div class="message-bubble bot-message">
+                Hello! I am the automated site assistant. Ask me about services, prices, or emergency help.
+            </div>
+        </div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type here..." autocomplete="off">
+            <button id="send-button" data-key="sendButton">➤</button>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal">
+        <div class="card-bg rounded-lg p-6 w-11/12 max-w-sm text-center border border-gray-600">
+            <p id="modal-text" class="mb-4 text-white text-lg"></p>
+            <button id="modal-close-button" class="btn-primary bg-blue-600 text-white px-6 py-2 rounded-full">OK</button>
+        </div>
+    </div>
+
+    <div id="detail-modal" class="modal">
+        <div class="card-bg relative flex flex-col">
+            <button id="detail-close-button" class="detail-close">&times;</button>
+            <h3 id="detail-title" class="text-2xl font-bold text-white mb-4"></h3>
+            <div id="detail-body" class="text-gray-300 flex-1 overflow-y-auto"></div>
         </div>
     </div>
 
     <script>
-        // Language content mapping
+        // --- CONTENT & LANGUAGE ---
         const content = {
             'sv': {
                 title: 'IT & Affärsassistans',
-                heroText: 'Din partner för digital spetskompetens. Med rötter i Sverige hjälper vi företag och organisationer att blomstra i den digitala världen genom omfattande outsourcinglösningar.',
+                heroText: 'Din partner för digital spetskompetens.',
                 heroSubTitle1: 'Navigera i den digitala transformationen med oss.',
-                heroSubText1: 'Vi erbjuder skräddarsydda strategier som effektiviserar er verksamhet och driver innovation framåt. Vår expertis täcker allt från molnlösningar till cybersäkerhet, så att ni kan fokusera på det som är viktigt.',
-                heroSubTitle2: 'Maximera er potential med smarta lösningar.',
-                heroSubText2: 'Genom att implementera de senaste teknologierna säkerställer vi att ni alltid är ett steg före. Oavsett om det gäller avancerad dataanalys eller systemintegration, är vi här för att hjälpa er nå era mål.',
-                privateHelpText: 'Bråkar skrivaren hemma och ingen kan hjälpa till? Kontakta oss för akuta ärenden eller bli medlem för kontinuerlig uppdatering och vägledning inklusive support.',
+                heroSubText1: 'Vi erbjuder skräddarsydda strategier som effektiviserar er verksamhet.',
                 panicButton: 'Panikknapp',
                 panicButtonNav: '🚨 Panik',
                 servicesNav: 'Tjänster',
                 projectsNav: 'Projekt',
                 helpButtonNav: '💬 Hjälp',
                 memberButtonHero: 'Bli Medlem',
-                contactButton: 'Kontakta Oss',
                 servicesTitle: 'Tjänster',
                 service1Title: 'Digital Transformation ✨',
-                service1Text: 'Navigera i den digitala utvecklingens komplexitet. Vi är specialiserade på digital presentation, implementering och expansion, för att säkerställa att ditt företag är redo för framtiden.',
+                service1Text: 'Vi hjälper er att navigera i den digitala utvecklingen.',
                 service2Title: 'Drift & Kontroll ⚙️',
-                service2Text: 'Få full överblick och kontroll. Vår expertis täcker analys, kunskapshantering och utredning, vilket ger dig den datadrivna insikt du behöver för att lyckas.',
+                service2Text: 'Få full överblick och kontroll över era system.',
                 service3Title: 'Validering & Support ✅',
-                service3Text: 'Säkerställ kvalitet och pålitlighet. Vi erbjuder insikter från tredje part, verifiering, rigorösa tester och kontinuerligt stöd för att hålla din verksamhet igång smidigt.',
+                service3Text: 'Säkerställ kvalitet och pålitlighet.',
                 emergencyTitle: 'Akut Support',
-                emergencyText: 'För akuta situationer inom den privata sektorn erbjuder vi omedelbar assistans. Betala för engångsstöd eller teckna ett medlemskap för löpande hjälp.',
-                emergencyButton: 'Akut Support',
-                memberButton: 'Bli Medlem',
-                klarnaText: 'För fakturabetalning är vi integrerade med Klarna. Kontakta oss direkt för att ordna.',
-                calendlyText: 'Boka ett möte med vårt team via <a href="#" id="calendly-link" class="text-blue-400 underline hover:text-blue-300">Calendly</a>.',
-                footerText1: 'Stolt baserade i Europa, med rötter i Sverige.',
-                footerText2: '© 2026 IT & Affärsassistans. Alla rättigheter förbehållna.',
+                emergencyText: 'Omedelbar assistans för kritiska problem.',
+                emergencyButton: 'Begär Akut Stöd',
                 membershipModalTitle: 'Medlemskap',
-                membershipModalIntro: 'Våra medlemskap erbjuder kontinuerlig support och kunskap, till ett lägre pris. Fyll i dina uppgifter för att se din personliga prisplan.',
                 formNameLabel: 'Namn',
                 formEmailLabel: 'E-post',
-                formPhoneLabel: 'Mobilnummer',
                 formSubmitButton: 'Se Priser',
                 pricingHeader: 'Våra Medlemskap',
-                pricingIntro: 'Jämför våra medlemskap med engångssupport för att se hur mycket du kan spara.',
-                plan1Title: 'Bas Medlemskap',
-                plan1Price: '500 SEK/månad',
-                plan1Feature1: 'Grundläggande IT-support',
-                plan1Feature2: 'Kontinuerlig information via e-post',
-                plan1Feature3: 'Förtur till support',
-                plan2Title: 'Premium Medlemskap',
-                plan2Price: '900 SEK/månad',
-                plan2Feature1: 'Obegränsad IT-support',
-                plan2Feature2: 'Personlig rådgivning',
-                plan2Feature3: 'Exklusivt utbildningsmaterial',
+                plan1Title: 'Bas',
+                plan1Price: '500 SEK/mån',
+                plan2Title: 'Premium',
+                plan2Price: '900 SEK/mån',
                 projectsTitle: 'Projekt & Sidor',
                 nordicShieldTitle: 'Nordic Shield',
-                nordicShieldDesc: 'Svensk teknikvision och dashboard – öppna sidan för att utforska.',
-                parentalGuidanceTitle: 'Parental Guidance System',
-                parentalGuidanceDesc: 'Föräldra- och vägledningsprojektet — öppna för detaljer.',
-                clickMeText: 'Help',
+                nordicShieldDesc: 'Svensk teknikvision.',
+                parentalGuidanceTitle: 'Parental Guidance',
+                parentalGuidanceDesc: 'Trygghetssystem.',
                 chatTitle: 'Chattassistent',
                 sendButton: 'Skicka',
-                modalCalendlyText: 'Omdirigerar till Calendlys bokningssida...',
-                service1DetailTitle: 'Digital Transformation — Detaljer',
-                service1DetailText: '<p>Vi skapar strategier för digital närvaro, molnmigrering, UX-design och API-integrationer. Typiska leverabler: roadmap, proof-of-concept och driftsättning.</p>',
-                service2DetailTitle: 'Drift & Kontroll — Detaljer',
-                service2DetailText: '<p>Övervakning, incidenthantering, kunskapshantering och driftspaket (SLA). Vi sätter upp dashboards, varningar samt rutiner för återställning.</p>',
-                service3DetailTitle: 'Validering & Support — Detaljer',
-                service3DetailText: '<p>QA, automatiserade tester, säkerhetsgranskning och löpande support. Vi erbjuder testplaner, regressionstester och kontinuerlig verifiering.</p>',
-                nordicShieldDetailTitle: 'Nordic Shield — Detaljer',
-                nordicShieldDetailText: '<p>Dashboardprojektet med datavisualisering, realtidsstatus och administrationsgränssnitt för övervakning.</p>',
-                parentalGuidanceDetailTitle: 'Parental Guidance — Detaljer',
-                parentalGuidanceDetailText: '<p>Projektet fokuserar på föräldrahjälp, inställningar för skärmtid och rapportering av innehåll för skolbruk.</p>',
-                emergencyDetailTitle: 'Akut Support — Detaljer',
-                emergencyDetailText: '<p>Omedelbar assistans dygnet runt för privatpersoner med prioriterad kontakt, felsökning på distans och möjlighet till snabb hembesök beroende på avtal.</p>',
-                membershipDetailTitle: 'Medlemskap — Detaljer',
-                membershipDetailText: '<p>Medlemskap inkluderar prioriterad support, månadsvisa hälsokontroller av system, och rådgivning. Olika nivåer erbjuds beroende på behov.</p>',
-                plan1DetailTitle: 'Bas Medlemskap — Detaljer',
-                plan1DetailText: '<p>Bas: grundläggande support via e-post, månadsvis statusrapport och förtur i kö.</p>',
-                plan2DetailTitle: 'Premium Medlemskap — Detaljer',
-                plan2DetailText: '<p>Premium: obegränsad support, snabbare SLA, personlig rådgivning och utbildningsmaterial.</p>',
-                readMoreText: 'Läs mer',
-                openNewTabText: 'Öppnas i ny flik'
+                footerText1: 'Stolt baserade i Europa, med rötter i Sverige.',
+                footerText2: '© 2026 IT & Affärsassistans.',
+                // QA Bot Responses
+                botWelcome: 'Hej! Jag är sajtens automatiska assistent. Fråga mig om tjänster, priser eller akut hjälp.',
+                botPrice: 'Vårt Bas-medlemskap kostar 500 SEK/mån och Premium kostar 900 SEK/mån. Vill du veta mer?',
+                botPanic: 'Om det är akut, använd den röda "Panikknappen" i menyn eller på startsidan för prioriterad hjälp!',
+                botService: 'Vi erbjuder Digital Transformation, Drift & Kontroll samt Validering & Support. Klicka på "Tjänster" för detaljer.',
+                botDefault: 'Jag förstår inte riktigt. Jag kan svara på frågor om "pris", "tjänster" eller "akut" hjälp.'
             },
             'en': { 
                 title: 'IT & Business Assistance',
-                heroText: 'Your partner for digital excellence. With roots in Sweden, we help companies and organizations thrive in the digital world through comprehensive outsourcing solutions.',
+                heroText: 'Your partner for digital excellence.',
                 heroSubTitle1: 'Navigate digital transformation with us.',
-                heroSubText1: 'We offer tailored strategies that streamline your operations and drive innovation. Our expertise covers everything from cloud solutions to cybersecurity, so you can focus on what matters.',
-                heroSubTitle2: 'Maximize your potential with smart solutions.',
-                heroSubText2: 'By implementing the latest technologies, we ensure you are always one step ahead. Whether it\'s advanced data analysis or system integration, we are here to help you achieve your goals.',
-                privateHelpText: 'Is your home printer giving you trouble and no one can help? Contact us for urgent matters or become a member for continuous updates and guidance including support.',
+                heroSubText1: 'We offer tailored strategies to streamline your operations.',
                 panicButton: 'Panic Button',
                 panicButtonNav: '🚨 Panic',
                 servicesNav: 'Services',
                 projectsNav: 'Projects',
                 helpButtonNav: '💬 Help',
                 memberButtonHero: 'Become a Member',
-                contactButton: 'Contact Us',
                 servicesTitle: 'Services',
                 service1Title: 'Digital Transformation ✨',
-                service1Text: 'Navigate the complexity of digital evolution. We specialize in digital presentation, implementation, and expansion, ensuring your business is ready for the future.',
+                service1Text: 'Navigate the complexity of digital evolution.',
                 service2Title: 'Operations & Control ⚙️',
-                service2Text: 'Gain full overview and control. Our expertise covers analysis, knowledge management, and investigation, giving you the data-driven insight you need to succeed.',
+                service2Text: 'Gain full overview and control.',
                 service3Title: 'Validation & Support ✅',
-                service3Text: 'Ensure quality and reliability. We offer third-party insights, verification, rigorous testing, and continuous support to keep your operations running smoothly.',
+                service3Text: 'Ensure quality and reliability.',
                 emergencyTitle: 'Urgent Support',
-                emergencyText: 'For urgent situations in the private sector, we offer immediate assistance. Pay for one-time support or sign up for a membership for ongoing help.',
-                emergencyButton: 'Urgent Support',
-                memberButton: 'Become a Member',
-                klarnaText: 'For invoice payments, we are integrated with Klarna. Contact us directly to arrange.',
-                calendlyText: 'Book a meeting with our team via <a href="#" id="calendly-link" class="text-blue-400 underline hover:text-blue-300">Calendly</a>.',
-                footerText1: 'Proudly based in Europe, with roots in Sweden.',
-                footerText2: '© 2026 IT & Business Assistance. All rights reserved.',
+                emergencyText: 'Immediate assistance for critical issues.',
+                emergencyButton: 'Request Urgent Support',
                 membershipModalTitle: 'Membership',
-                membershipModalIntro: 'Our memberships offer you continuous support and knowledge, at a lower price. Fill in your details to see your personal pricing plan.',
                 formNameLabel: 'Name',
                 formEmailLabel: 'Email',
-                formPhoneLabel: 'Phone Number',
                 formSubmitButton: 'See Pricing',
                 pricingHeader: 'Our Memberships',
-                pricingIntro: 'Compare our memberships with one-time support to see how much you can save.',
-                plan1Title: 'Basic Membership',
+                plan1Title: 'Basic',
                 plan1Price: '500 SEK/month',
-                plan1Feature1: 'Basic IT support',
-                plan1Feature2: 'Continuous information via email',
-                plan1Feature3: 'Priority access to support',
-                plan2Title: 'Premium Membership',
+                plan2Title: 'Premium',
                 plan2Price: '900 SEK/month',
-                plan2Feature1: 'Unlimited IT support',
-                plan2Feature2: 'Personalized consultation',
-                plan2Feature3: 'Exclusive training materials',
                 projectsTitle: 'Projects & Pages',
                 nordicShieldTitle: 'Nordic Shield',
-                nordicShieldDesc: 'Swedish tech vision and dashboard – open to explore.',
-                parentalGuidanceTitle: 'Parental Guidance System',
-                parentalGuidanceDesc: 'Parental and guidance project – open for details.',
-                clickMeText: 'Help',
+                nordicShieldDesc: 'Swedish tech vision.',
+                parentalGuidanceTitle: 'Parental Guidance',
+                parentalGuidanceDesc: 'Safety system.',
                 chatTitle: 'Chat Assistant',
                 sendButton: 'Send',
-                modalCalendlyText: 'Redirecting to Calendly booking page...',
-                service1DetailTitle: 'Digital Transformation — Details',
-                service1DetailText: '<p>We craft digital roadmaps, cloud migration plans, UX improvements and API integrations. Deliverables typically include roadmaps, POCs and deployment.</p>',
-                service2DetailTitle: 'Operations & Control — Details',
-                service2DetailText: '<p>Monitoring, incident response, knowledge management and operational SLAs. We build dashboards, alerts and recovery procedures.</p>',
-                service3DetailTitle: 'Validation & Support — Details',
-                service3DetailText: '<p>QA, automated tests, security reviews, and ongoing support. We provide test plans, regression suites and continuous verification.</p>',
-                nordicShieldDetailTitle: 'Nordic Shield — Details',
-                nordicShieldDetailText: '<p>Dashboard project with data visualizations, realtime status and admin interface for monitoring.</p>',
-                parentalGuidanceDetailTitle: 'Parental Guidance — Details',
-                parentalGuidanceDetailText: '<p>Focuses on parental controls, screen-time settings and content reporting for educational scenarios.</p>',
-                emergencyDetailTitle: 'Urgent Support — Details',
-                emergencyDetailText: '<p>Immediate assistance with priority contact, remote troubleshooting and onsite visits where applicable depending on the chosen plan.</p>',
-                membershipDetailTitle: 'Membership — Details',
-                membershipDetailText: '<p>Memberships include priority support, monthly health checks and advisory time. Multiple tiers are available depending on needs.</p>',
-                plan1DetailTitle: 'Basic Membership — Details',
-                plan1DetailText: '<p>Basic: email support, monthly status report and prioritized queue placement.</p>',
-                plan2DetailTitle: 'Premium Membership — Details',
-                plan2DetailText: '<p>Premium: unlimited support, faster SLA, personalized consulting and training materials.</p>',
-                readMoreText: 'Read More',
-                openNewTabText: 'Opens in new tab'
-            }
-        };
-
-        const setLanguage = (lang) => {
-            document.querySelectorAll('[data-key]').forEach(element => {
-                const key = element.getAttribute('data-key');
-                if (content[lang][key]) {
-                    if (element.querySelector('a')) {
-                         element.innerHTML = content[lang][key];
-                    } else {
-                        element.textContent = content[lang][key];
-                    }
-                }
-            });
-            document.title = content[lang].title;
-            // Update language toggle button
-            const langToggleBtn = document.getElementById('lang-toggle-btn');
-            if (lang === 'sv') {
-                langToggleBtn.textContent = 'EN/SV';
-                localStorage.setItem('preferredLanguage', 'sv');
-            } else {
-                langToggleBtn.textContent = 'SV/EN';
-                localStorage.setItem('preferredLanguage', 'en');
+                footerText1: 'Proudly based in Europe, with roots in Sweden.',
+                footerText2: '© 2026 IT & Business Assistance.',
+                // QA Bot Responses
+                botWelcome: 'Hello! I am the automated site assistant. Ask me about services, prices, or emergency help.',
+                botPrice: 'Our Basic membership is 500 SEK/month and Premium is 900 SEK/month. Would you like to sign up?',
+                botPanic: 'If this is an emergency, please use the red "Panic" button in the menu or on the homepage!',
+                botService: 'We offer Digital Transformation, Operations & Control, and Validation. Check the "Services" section for details.',
+                botDefault: 'I didn\'t catch that. I can answer questions about "price", "services", or "emergency" help.'
             }
         };
 
         let currentLanguage = 'en';
-        
+
+        const setLanguage = (lang) => {
+            currentLanguage = lang;
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (content[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                         element.placeholder = content[lang][key];
+                    } else {
+                         element.innerText = content[lang][key];
+                    }
+                }
+            });
+            document.getElementById('lang-toggle-btn').textContent = lang === 'sv' ? 'EN/SV' : 'SV/EN';
+            // Reset chat welcome message
+            const bubbles = document.querySelectorAll('.message-bubble');
+            if(bubbles.length > 0) bubbles[0].innerText = content[lang].botWelcome;
+        };
+
         const toggleLanguage = () => {
-            currentLanguage = currentLanguage === 'en' ? 'sv' : 'en';
-            setLanguage(currentLanguage);
+            const newLang = currentLanguage === 'en' ? 'sv' : 'en';
+            setLanguage(newLang);
         };
 
-        // Modal functions
-        const showModal = (message) => {
-            const modal = document.getElementById('message-modal');
-            const modalText = document.getElementById('modal-text');
-            modalText.textContent = message;
-            modal.style.display = 'flex';
-        };
+        // --- SMART NAVIGATION LOGIC ---
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
 
-        const hideModal = () => {
-            const modal = document.getElementById('message-modal');
-            modal.style.display = 'none';
-        };
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 50) {
+                // We are scrolled down
+                navbar.classList.add('nav-scrolled');
+                
+                if (scrollTop > lastScrollTop) {
+                    // Scrolling DOWN -> HIDE Navbar
+                    navbar.classList.add('nav-hidden');
+                } else {
+                    // Scrolling UP -> SHOW Navbar
+                    navbar.classList.remove('nav-hidden');
+                }
+            } else {
+                // At the very top
+                navbar.classList.remove('nav-scrolled');
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        }, false);
 
-        // Scroll functions
-        const scrollToEmergency = () => {
-            const emergencySection = document.getElementById('emergency');
-            emergencySection.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        const scrollToServices = () => {
-            const servicesSection = document.getElementById('services');
-            servicesSection.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        const scrollToProjects = () => {
-            const projectsSection = document.getElementById('projects');
-            projectsSection.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        const scrollToMembership = () => {
-            const membershipSection = document.getElementById('membership-section');
-            membershipSection.scrollIntoView({ behavior: 'smooth' });
-        };
-        
-        const handleFormSubmit = (event) => {
-            event.preventDefault();
-            document.getElementById('membership-form').style.display = 'none';
-            document.getElementById('pricing-results').classList.remove('hidden');
-        };
-
-        // Chatbot logic
+        // --- MOCK CHATBOT (QA MASTER) ---
         const chatWindow = document.getElementById('chat-window');
-        const floatingButton = document.getElementById('floating-button');
-        const closeChatButton = document.getElementById('close-chat');
         const chatMessages = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
-        const sendButton = document.getElementById('send-button');
-        let chatHistory = [];
-        let isChatOpen = false;
-
-        const toggleChat = () => {
-            isChatOpen = !isChatOpen;
-            chatWindow.classList.toggle('hidden', !isChatOpen);
-            chatWindow.classList.toggle('open', isChatOpen);
-        };
-
-        const appendMessage = (sender, message) => {
-            const messageBubble = document.createElement('div');
-            messageBubble.classList.add('message-bubble');
-            if (sender === 'user') {
-                messageBubble.classList.add('user-message');
+        
+        function toggleChat() {
+            const isHidden = chatWindow.classList.contains('hidden');
+            if (isHidden) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => chatWindow.classList.add('open'), 10);
             } else {
-                messageBubble.classList.add('bot-message');
+                chatWindow.classList.remove('open');
+                setTimeout(() => chatWindow.classList.add('hidden'), 300);
             }
-            messageBubble.textContent = message;
-            chatMessages.appendChild(messageBubble);
+        }
+
+        document.getElementById('close-chat').addEventListener('click', toggleChat);
+        document.getElementById('floating-button').addEventListener('click', toggleChat);
+
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `message-bubble ${sender === 'user' ? 'user-message' : 'bot-message'}`;
+            div.innerText = text;
+            chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-        };
-        
-        const sendMessage = async () => {
-            const message = chatInput.value.trim();
-            if (message === '') return;
-            
-            appendMessage('user', message);
-            chatHistory.push({ role: "user", parts: [{ text: message }] });
+        }
+
+        function handleChat() {
+            const text = chatInput.value.trim().toLowerCase();
+            if (!text) return;
+
+            addMessage(chatInput.value, 'user');
             chatInput.value = '';
-            
-            appendMessage('bot', 'Skriver...'); // Loading message
 
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            // Simulated typing delay
+            setTimeout(() => {
+                let response = content[currentLanguage].botDefault;
 
-            const payload = {
-                contents: chatHistory,
-                tools: [{ "google_search": {} }],
-                systemInstruction: {
-                    parts: [{ text: "Du är en AI-assistent för IT & Affärsassistans. Svara på frågor kort och koncist. Behåll ett professionellt, hjälpsamt och vänligt tonfall. Håll dig till IT-relaterade ämnen. Svara på svenska." }]
+                if (text.includes('price') || text.includes('cost') || text.includes('pris') || text.includes('kosta') || text.includes('plan')) {
+                    response = content[currentLanguage].botPrice;
+                } else if (text.includes('panic') || text.includes('help') || text.includes('emergency') || text.includes('panik') || text.includes('akut') || text.includes('hjälp')) {
+                    response = content[currentLanguage].botPanic;
+                } else if (text.includes('service') || text.includes('what') || text.includes('tjänst') || text.includes('gör ni')) {
+                    response = content[currentLanguage].botService;
+                } else if (text.includes('hello') || text.includes('hi') || text.includes('hej')) {
+                    response = content[currentLanguage].botWelcome;
                 }
-            };
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                addMessage(response, 'bot');
+            }, 600);
+        }
 
-                const result = await response.json();
-                const botMessage = result.candidates[0].content.parts[0].text;
-                
-                chatMessages.removeChild(chatMessages.lastChild); // Remove loading message
-                appendMessage('bot', botMessage);
-                chatHistory.push({ role: "model", parts: [{ text: botMessage }] });
+        document.getElementById('send-button').addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
 
-            } catch (error) {
-                console.error('API Error:', error);
-                chatMessages.removeChild(chatMessages.lastChild);
-                appendMessage('bot', 'Ursäkta, jag kunde inte ansluta. Försök igen senare.');
-            }
-        };
-
-        // Event listeners
-        document.getElementById('membership-form').addEventListener('submit', handleFormSubmit);
-        document.getElementById('calendly-link').addEventListener('click', (event) => {
-            event.preventDefault();
-            showModal(content[currentLanguage].modalCalendlyText);
-        });
-        document.getElementById('modal-close-button').addEventListener('click', hideModal);
-
-        floatingButton.addEventListener('click', toggleChat);
-        closeChatButton.addEventListener('click', toggleChat);
-        sendButton.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+        // --- MODALS & SCROLLS ---
+        function showModal(msg) {
+            document.getElementById('modal-text').innerText = msg;
+            document.getElementById('message-modal').style.display = 'flex';
+        }
+        document.getElementById('modal-close-button').onclick = () => document.getElementById('message-modal').style.display = 'none';
+        
+        // Detail Modal
+        document.querySelectorAll('[data-detail]').forEach(el => {
+            el.addEventListener('click', (e) => {
                 e.preventDefault();
-                sendMessage();
-            }
+                const key = el.getAttribute('data-detail');
+                const titleKey = key + 'Title'; 
+                // Simple mapping for this demo, usually you'd have detailText in content object
+                const title = content[currentLanguage][titleKey] || "Details";
+                document.getElementById('detail-title').innerText = title;
+                document.getElementById('detail-body').innerHTML = `<p>Detailed information about ${title} would appear here loaded from the database.</p>`;
+                document.getElementById('detail-modal').style.display = 'flex';
+            });
+        });
+        document.getElementById('detail-close-button').onclick = () => document.getElementById('detail-modal').style.display = 'none';
+
+        function scrollToServices() { document.getElementById('services').scrollIntoView({behavior: 'smooth'}); }
+        function scrollToProjects() { document.getElementById('projects').scrollIntoView({behavior: 'smooth'}); }
+        function scrollToEmergency() { document.getElementById('emergency').scrollIntoView({behavior: 'smooth'}); }
+        function scrollToMembership() { document.getElementById('membership-section').scrollIntoView({behavior: 'smooth'}); }
+
+        document.getElementById('membership-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('pricing-results').classList.remove('hidden');
+            e.target.style.display = 'none';
         });
 
-        // Scroll event for nav transparency
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        // Mobile compact header: show only buttons when scrolling down, show full header when scrolling up
-        (function mobileCompactHeader() {
-            let lastY = window.scrollY;
-            let ticking = false;
-            function onScroll() {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const y = window.scrollY;
-                        const nav = document.querySelector('nav');
-                        const isMobile = window.innerWidth <= 640;
-                        if (!isMobile) {
-                            nav.classList.remove('compact');
-                            lastY = y;
-                            ticking = false;
-                            return;
-                        }
-
-                        const delta = y - lastY;
-                        // scrolling down -> compact (show buttons only)
-                        if (delta > 8 && y > 40) {
-                            nav.classList.add('compact');
-                        }
-                        // scrolling up -> expand
-                        else if (delta < -8 || y < 40) {
-                            nav.classList.remove('compact');
-                        }
-
-                        lastY = y;
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            window.addEventListener('resize', () => {
-                const nav = document.querySelector('nav');
-                if (window.innerWidth > 640) nav.classList.remove('compact');
-            });
-        })();
-        
-        // JS-driven shimmer wave: deterministic left→right then right→left sequence
-        function runShimmerWave() {
-            const selector = '#services .shimmer, #projects .shimmer, #membership-section .shimmer';
-            const nodes = Array.from(document.querySelectorAll(selector));
-            if (!nodes.length) return;
-
-            const stepDelay = 1600; // ms between each card activation (slower, professional pace)
-            const hold = 2400; // ms each card remains highlighted
-            let forward = true;
-
-            (function loop() {
-                const indices = forward ? nodes.map((_, i) => i) : nodes.map((_, i) => i).reverse();
-                let t = 0;
-                indices.forEach((idx) => {
-                    setTimeout(() => {
-                        const el = nodes[idx];
-                        // apply directional class then activate in next frame for a clean CSS transition
-                        if (forward) {
-                            el.classList.add('sweep-ltr');
-                        } else {
-                            el.classList.add('sweep-rtl');
-                        }
-                        // trigger activation on next frame to ensure starting position applied
-                        requestAnimationFrame(() => requestAnimationFrame(() => {
-                            el.classList.add('wave-active');
-                        }));
-
-                        // remove classes after the sweep finishes
-                        setTimeout(() => {
-                            el.classList.remove('wave-active');
-                            el.classList.remove('sweep-ltr');
-                            el.classList.remove('sweep-rtl');
-                        }, hold + 2250); // allow transition (2200ms) + hold
-                    }, t);
-                    t += stepDelay;
-                });
-                forward = !forward;
-                // schedule next full pass after this one completes plus small gap
-                setTimeout(loop, t + hold + 900);
-            })();
-        }
-        
-        // Detail modal handlers: open/close and data binding
-        function openDetailModal(key) {
-            const modal = document.getElementById('detail-modal');
-            const titleEl = document.getElementById('detail-title');
-            const bodyEl = document.getElementById('detail-body');
-            const footer = document.getElementById('detail-footer');
-            const link = document.getElementById('detail-link');
-            if (!modal || !titleEl || !bodyEl) return;
-            const lang = currentLanguage || 'en';
-            const titleKey = key + 'DetailTitle';
-            const bodyKey = key + 'DetailText';
-            titleEl.textContent = (content[lang] && content[lang][titleKey]) ? content[lang][titleKey] : '';
-            // allow HTML in body (for links/listing) but sanitize minimal by replacing script tags
-            const raw = (content[lang] && content[lang][bodyKey]) ? content[lang][bodyKey] : '';
-            bodyEl.innerHTML = raw.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-            
-            // Show footer with link only for project cards (nordicShield, parentalGuidance)
-            const projectLinks = {
-                'nordicShield': 'Nordic Shield/index.html',
-                'parentalGuidance': 'Parental Guidance System /index.html'
-            };
-            
-            if (projectLinks[key]) {
-                footer.style.display = 'flex';
-                link.href = projectLinks[key];
-                link.textContent = (content[lang] && content[lang]['readMoreText']) ? content[lang]['readMoreText'] : 'Read More';
-                // We navigate in the same tab — no need to hint about a new tab
-                footer.querySelector('p').textContent = '';
-            } else {
-                footer.style.display = 'none';
-            }
-            
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden','false');
-        }
-
-        function closeDetailModal() {
-            const modal = document.getElementById('detail-modal');
-            if (!modal) return;
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden','true');
-        }
-
-        function setupDetailHandlers() {
-            // attach to any element with data-detail
-            document.querySelectorAll('[data-detail]').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    // prevent default navigation for anchors
-                    if (el.tagName.toLowerCase() === 'a') e.preventDefault();
-                    const key = el.getAttribute('data-detail');
-                    if (!key) return;
-                    openDetailModal(key);
-                });
-            });
-
-            const closeBtn = document.getElementById('detail-close-button');
-            if (closeBtn) closeBtn.addEventListener('click', closeDetailModal);
-
-            // close when clicking overlay
-            const detailModal = document.getElementById('detail-modal');
-            if (detailModal) {
-                detailModal.addEventListener('click', (ev) => {
-                    if (ev.target === detailModal) closeDetailModal();
-                });
-            }
-
-            // The detail link uses native anchor behavior (target="_blank")
-            // so we avoid programmatic window.open which can be blocked by popup blockers.
-
-            // ESC to close
-            document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeDetailModal(); });
-        }
-
-        // Three.js setup for a futuristic, non-laggy background
+        // --- THREE.JS BACKGROUND ---
         window.onload = function() {
-            setLanguage('en'); // Set default language to English
-            // start deterministic shimmer wave after DOM setup
-            runShimmerWave();
-            // wire up detail modal handlers
-            setupDetailHandlers();
-
+            setLanguage('en');
+            
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), antialias: true, alpha: true });
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+            
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const particles = [];
-            const particleCount = 1000;
-            const geometry = new THREE.SphereGeometry(0.1, 8, 8);
-            const material = new THREE.MeshBasicMaterial({ color: 0x6EE7B7 });
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = new THREE.Mesh(geometry, material);
-                particle.position.x = (Math.random() - 0.5) * 200;
-                particle.position.y = (Math.random() - 0.5) * 200;
-                particle.position.z = (Math.random() - 0.5) * 200;
-                particles.push(particle);
-                scene.add(particle);
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 20; 
             }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const material = new THREE.PointsMaterial({ size: 0.03, color: 0x3b82f6, transparent: true, opacity: 0.8 });
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
 
             camera.position.z = 5;
 
-            // Animate function
-            function animate() {
-                requestAnimationFrame(animate);
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX / window.innerWidth - 0.5;
+                mouseY = event.clientY / window.innerHeight - 0.5;
+            });
 
-                // Simple particle movement
-                particles.forEach(p => {
-                    p.rotation.x += 0.01;
-                    p.rotation.y += 0.01;
-                    p.position.z += 0.1;
-                    if (p.position.z > camera.position.z + 10) {
-                        p.position.z = camera.position.z - 200;
-                    }
-                });
-                
+            const clock = new THREE.Clock();
+
+            function animate() {
+                const elapsedTime = clock.getElapsedTime();
+                particlesMesh.rotation.y = elapsedTime * 0.05;
+                particlesMesh.rotation.x = mouseY * 0.5;
+                particlesMesh.rotation.y += mouseX * 0.5;
+
                 renderer.render(scene, camera);
+                requestAnimationFrame(animate);
             }
             animate();
 
-            // Handle window resize
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
